@@ -1,9 +1,9 @@
 {
   "accuracy": 0.6512,
   "alive_dead_f1": 0.8919816542780326,
-  "bootstrap_high": null,
-  "bootstrap_low": null,
-  "bootstrap_n": 0,
+  "bootstrap_high": 0.7356589694120936,
+  "bootstrap_low": 0.4300149192148294,
+  "bootstrap_n": 1000,
   "confusion": [
     [
       2750,
@@ -68,8 +68,8 @@
   "pred_home_share": 0.618442932728647,
   "share_defined": true,
   "share_err": 0.04573525572649151,
-  "spell_bootstrap_high": null,
-  "spell_bootstrap_low": null,
+  "spell_bootstrap_high": 0.05945945945945948,
+  "spell_bootstrap_low": 0.01891891891891892,
   "spell_count_error": 114,
   "spell_f1": {
     "0.3": {
