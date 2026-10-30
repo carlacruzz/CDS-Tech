@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Cómo funciona una homografía en fútbol</title>
+  <desc id="desc">Una homografía proyecta coordenadas normalizadas del campo sobre píxeles de una imagen y permite invertir el camino.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M1,1 L11,6 L1,11 Z" fill="#263746"/></marker>
+    <marker id="arrowBlue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M1,1 L11,6 L1,11 Z" fill="#1769aa"/></marker>
+    <style>
+      text{font-family:Arial,Helvetica,sans-serif;fill:#182631}.title{font-size:30px;font-weight:700}.head{font-size:21px;font-weight:700}.body{font-size:17px}.small{font-size:15px}.mono{font-family:Consolas,monospace;font-size:16px}.muted{fill:#536574}
+    </style>
+  </defs>
+  <rect width="1200" height="760" fill="#f5f8fb"/>
+  <text x="600" y="48" text-anchor="middle" class="title">Homografía: del campo a los píxeles</text>
+  <text x="600" y="78" text-anchor="middle" class="body muted">Una matriz por fotograma corrige el efecto de perspectiva de la cámara</text>
+
+  <!-- Top-down pitch -->
+  <text x="270" y="130" text-anchor="middle" class="head">1. Coordenadas del campo</text>
+  <rect x="90" y="165" width="360" height="250" rx="4" fill="#4b9b69" stroke="#276543" stroke-width="4"/>
+  <rect x="107" y="182" width="326" height="216" fill="none" stroke="#e9f4e9" stroke-width="3"/>
+  <line x1="270" y1="182" x2="270" y2="398" stroke="#e9f4e9" stroke-width="3"/>
+  <circle cx="270" cy="290" r="34" fill="none" stroke="#e9f4e9" stroke-width="3"/>
+  <circle cx="270" cy="290" r="4" fill="#e9f4e9"/>
+  <rect x="107" y="245" width="42" height="90" fill="none" stroke="#e9f4e9" stroke-width="3"/>
+  <rect x="391" y="245" width="42" height="90" fill="none" stroke="#e9f4e9" stroke-width="3"/>
+  <circle cx="335" cy="245" r="11" fill="#ffd34e" stroke="#553d00" stroke-width="2"/>
+  <text x="334" y="225" text-anchor="middle" class="small" fill="#fff">jugador (x,y)</text>
+  <text x="90" y="442" class="small">(0,0)</text><text x="450" y="442" text-anchor="end" class="small">(1,1)</text>
+  <text x="270" y="470" text-anchor="middle" class="body">Posición normalizada: x,y entre 0 y 1</text>
+
+  <!-- transform -->
+  <line x1="478" y1="287" x2="707" y2="287" stroke="#263746" stroke-width="4" marker-end="url(#arrow)"/>
+  <rect x="516" y="190" width="160" height="64" rx="12" fill="#fff" stroke="#bac8d2" stroke-width="2"/>
+  <text x="596" y="216" text-anchor="middle" class="head">Matriz H</text>
+  <text x="596" y="240" text-anchor="middle" class="small">3 × 3 por fotograma</text>
+  <text x="592" y="320" text-anchor="middle" class="small muted">proyectar</text>
+  <line x1="710" y1="355" x2="481" y2="355" stroke="#1769aa" stroke-width="3" marker-end="url(#arrowBlue)"/>
+  <text x="592" y="385" text-anchor="middle" class="small" fill="#1769aa">H⁻¹: deshacer la proyección</text>
+
+  <!-- image perspective -->
+  <text x="930" y="130" text-anchor="middle" class="head">2. Imagen de la cámara</text>
+  <rect x="730" y="165" width="400" height="250" rx="8" fill="#233b4d" stroke="#152a39" stroke-width="4"/>
+  <polygon points="790,208 1072,208 1100,374 758,374" fill="#4b9b69" stroke="#e9f4e9" stroke-width="3"/>
+  <line x1="790" y1="208" x2="758" y2="374" stroke="#e9f4e9" stroke-width="2"/>
+  <line x1="1072" y1="208" x2="1100" y2="374" stroke="#e9f4e9" stroke-width="2"/>
+  <line x1="931" y1="208" x2="929" y2="374" stroke="#e9f4e9" stroke-width="2"/>
+  <ellipse cx="930" cy="291" rx="30" ry="10" fill="none" stroke="#e9f4e9" stroke-width="2"/>
+  <circle cx="969" cy="253" r="10" fill="#ffd34e" stroke="#553d00" stroke-width="2"/>
+  <path d="M969 253 L1018 236" fill="none" stroke="#ffd34e" stroke-width="2" stroke-dasharray="5 5"/>
+  <text x="1019" y="231" class="small" fill="#fff">píxel (u,v)</text>
+  <text x="930" y="448" text-anchor="middle" class="body">El campo se ve en perspectiva</text>
+  <text x="930" y="474" text-anchor="middle" class="small muted">H transforma (x,y) → (u,v)</text>
+
+  <!-- bottom explanation -->
+  <rect x="75" y="520" width="1050" height="190" rx="16" fill="#fff" stroke="#d4dfe7" stroke-width="2"/>
+  <text x="110" y="560" class="head">Qué hace con un punto</text>
+  <circle cx="137" cy="605" r="12" fill="#ffd34e" stroke="#553d00" stroke-width="2"/>
+  <text x="165" y="611" class="body">El tracking dice dónde está en el campo.</text>
+  <text x="165" y="638" class="mono">(x,y) = (0.68, 0.35)</text>
+  <line x1="510" y1="610" x2="645" y2="610" stroke="#263746" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="675" y="611" class="body">La homografía calcula dónde cae en la imagen.</text>
+  <text x="675" y="638" class="mono">(u,v) = (969, 253) píxeles</text>
+  <text x="110" y="681" class="small muted">Si valid = 0, no hay transformación fiable para ese fotograma. Un error de reproyección menor suele indicar mejor ajuste.</text>
+</svg>

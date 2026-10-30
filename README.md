@@ -1,49 +1,50 @@
-# CDS-Tech · More than a Hack 2027 — Fase 1: posesión del balón
+# Unpack the match data here
 
-Objetivo: generar un CSV `frame,label` con 199.319 filas que diga, para cada frame del vídeo
-táctico, si el balón es del Barcelona (`H`), del Athletic (`A`), está muerto (`D`) o no
-respondemos (`X`). Entrega: **17 de noviembre de 2026**. Contexto completo en la presentación
-del equipo y en `context/`.
+This folder is empty on purpose. The match assets are gated — see [DATA.md](../DATA.md) for how to
+enrol, accept the terms, and get the download link.
 
-## Instalación
+Unpack the bundle here, keeping the names it arrives with:
+
+```
+data/
+├─ tactical/                                  the evaluation reference
+│  ├─ BAR-ATH_tactical.mp4                    row i of a submission is frame i of this
+│  ├─ BAR-ATH_tactical_atd.xml                tracking metadata
+│  ├─ BAR-ATH_tactical_atd.txt                tracking, players and ball
+│  ├─ BAR-ATH_tactical_homography.csv         one 3x3 matrix per frame
+│  └─ BAR-ATH_tactical_smart_tagging.xml      638 tactical phases and set pieces
+└─ broadcast/                                 optional, NOT synchronised to tactical
+   ├─ BAR-ATH_broadcast.mp4
+   ├─ BAR-ATH_broadcast_atd.xml
+   ├─ BAR-ATH_broadcast_atd.txt
+   └─ BAR-ATH_broadcast_homography.csv
+```
+
+One folder per recording, because the question that matters most about any of these files is which
+timeline it is on. `games.py` derives every path, so nothing else in the repository spells one out:
+
+```python
+from games import asset_paths
+asset_paths()                      # tactical, the default
+asset_paths(source="broadcast")
+```
+
+If a filename ever changes, `games.py` is the only edit.
+
+Prefer to keep the data somewhere else? Point `MTAH_DATA_DIR` at it and nothing else changes:
 
 ```bash
-git clone --recurse-submodules <url-de-este-repo>
-cd CDS-Tech
-conda create -n mtah python=3.11 -y
-conda activate mtah
-pip install -r requirements.txt
+export MTAH_DATA_DIR=/mnt/big-disk/mtah2027       # macOS / Linux
+$env:MTAH_DATA_DIR = "D:\mtah2027"                # Windows PowerShell
 ```
 
-Los datos no están en el repo y **nunca se suben**. Colocadlos en `dataset/tactical/` y
-`dataset/broadcast/` con sus nombres originales, y en cada terminal:
+## Nothing in here is committed
 
-```bash
-export MTAH_DATA_DIR="$PWD/dataset"
-```
+`.gitignore` keeps everything except this README out of git. That is not only tidiness — the terms
+you accepted cover redistribution, and a public fork with the match video in it is redistribution.
+Your own submission repository has to be public too, so check the same thing there.
 
-Si añadís una dependencia, actualizad `requirements.txt` en el mismo commit: el repo tiene que
-regenerar exactamente el CSV entregado.
+## You do not need any of this to run the scorer
 
-## Estructura
-
-```
-context/     documentación oficial del reto
-mtah/        repo oficial de los organizadores (scorer, GT público, baseline). No tocar
-src/         nuestro pipeline
-notebooks/   exploración
-docs/        documento técnico de la entrega
-dataset/     datos del partido (ignorado por git)
-outputs/     CSV generados (ignorado por git)
-eval/        informes de evaluación (ignorado por git)
-```
-
-## Generar, validar y evaluar
-
-```bash
-python mtah/evaluation/validate_submission.py outputs/<fichero>.csv
-python mtah/evaluation/run_evaluation.py --results outputs --out eval
-```
-
-Para comprobar la instalación, regenerad antes los baselines con
-`python mtah/starter/baseline.py --out outputs`: `baseline_smooth50` debe dar spellF1 0.3256.
+The evaluation reads CSVs only. `python evaluation/run_evaluation.py` works on a fresh clone with
+this folder empty, and scores the four baselines that ship with the repository.
