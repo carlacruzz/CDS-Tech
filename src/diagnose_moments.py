@@ -7,7 +7,8 @@
    Tagging marca un reinicio cerca del final de cada parada?
 
 Solo imprime valores agregados por evento (equipo, distancias, desfases en frames).
-test
+
+
 Uso, desde la raíz de CDS-Tech:
     python src/diagnose_moments.py
 """
